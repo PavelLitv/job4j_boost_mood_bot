@@ -7,4 +7,8 @@ import org.springframework.stereotype.Component;
 public class AppConfig {
     @Value("${telegram.bot.name}")
     private String botName;
+
+    public void print() {
+        System.out.println(botName);
+    }
 }
