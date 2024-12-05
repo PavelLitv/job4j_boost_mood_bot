@@ -1,0 +1,6 @@
+spring.profiles.active=test
+telegram.bot.name=botName
+telegram.bot.token=botToken
+app.version=1.0.0
+app.url=https://example.com/api
+app.timeout=5000
