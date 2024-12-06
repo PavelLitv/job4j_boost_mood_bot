@@ -1,4 +1,4 @@
-package ru.job4j.services;
+package ru.job4j.bmb.services;
 
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.stereotype.Service;

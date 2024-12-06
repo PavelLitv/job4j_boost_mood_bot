@@ -5,17 +5,17 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "mb_user")
-public class User {
+@Table(name = "mb_award")
+public class Award {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "client_id", unique = true)
-    private long clientId;
+    private String title;
 
-    @Column(name = "chat_id")
-    private long chatId;
+    private String description;
+
+    private int days;
 
     public Long getId() {
         return id;
@@ -25,20 +25,28 @@ public class User {
         this.id = id;
     }
 
-    public long getClientId() {
-        return clientId;
+    public String getTitle() {
+        return title;
     }
 
-    public void setClientId(long clientId) {
-        this.clientId = clientId;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public long getChatId() {
-        return chatId;
+    public String getDescription() {
+        return description;
     }
 
-    public void setChatId(long chatId) {
-        this.chatId = chatId;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
     }
 
     @Override
@@ -49,8 +57,8 @@ public class User {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        User user = (User) o;
-        return Objects.equals(id, user.id);
+        Award award = (Award) o;
+        return Objects.equals(id, award.id);
     }
 
     @Override

@@ -5,17 +5,17 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "mb_user")
-public class User {
+@Table(name = "mb_mood_content")
+public class MoodContent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "client_id", unique = true)
-    private long clientId;
+    @ManyToOne
+    @JoinColumn(name = "mood_id")
+    private Mood mood;
 
-    @Column(name = "chat_id")
-    private long chatId;
+    private String text;
 
     public Long getId() {
         return id;
@@ -25,20 +25,20 @@ public class User {
         this.id = id;
     }
 
-    public long getClientId() {
-        return clientId;
+    public Mood getMood() {
+        return mood;
     }
 
-    public void setClientId(long clientId) {
-        this.clientId = clientId;
+    public void setMood(Mood mood) {
+        this.mood = mood;
     }
 
-    public long getChatId() {
-        return chatId;
+    public String getText() {
+        return text;
     }
 
-    public void setChatId(long chatId) {
-        this.chatId = chatId;
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
@@ -49,8 +49,8 @@ public class User {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        User user = (User) o;
-        return Objects.equals(id, user.id);
+        MoodContent moodContent = (MoodContent) o;
+        return Objects.equals(id, moodContent.id);
     }
 
     @Override
