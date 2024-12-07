@@ -18,6 +18,8 @@
     <!--   <property name="headerFile" value="${checkstyle.header.file}"/> -->
     <!--   <property name="fileExtensions" value="java"/> -->
     <!-- </module> -->
+    <!-- Отфильтровать предупреждения Checkstyle, которые были подавлены с помощью аннотации @SuppressWarnings -->
+    <module name="SuppressWarningsFilter"/>
 
     <module name="TreeWalker">
 
@@ -42,6 +44,8 @@
         <module name="ParameterName"/>
         <module name="StaticVariableName"/>
         <module name="TypeName"/>
+        <!-- Сделать аннотации @SuppressWarnings доступными для Checkstyle -->
+        <module name="SuppressWarningsHolder"/>
 
         <!-- Checks for Size Violations.                    -->
         <!-- See http://checkstyle.sf.net/config_sizes.html -->
