@@ -20,6 +20,10 @@ public class MoodContent {
     public MoodContent() {
     }
 
+    public MoodContent(String text) {
+        this.text = text;
+    }
+
     public MoodContent(Mood mood, String text) {
         this.mood = mood;
         this.text = text;

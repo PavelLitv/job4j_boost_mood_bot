@@ -3,14 +3,19 @@ package ru.job4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.job4j.bmb.model.Award;
 import ru.job4j.bmb.model.Mood;
 import ru.job4j.bmb.model.MoodContent;
 import ru.job4j.bmb.repository.AwardRepository;
 import ru.job4j.bmb.repository.MoodContentRepository;
 import ru.job4j.bmb.repository.MoodRepository;
+import ru.job4j.bmb.services.TgRemoteService;
 
 import java.util.List;
 
@@ -19,6 +24,20 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
+    }
+
+    @Bean
+    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+        return args -> {
+            var bot = ctx.getBean(TgRemoteService.class);
+            var botsApi = new TelegramBotsApi(DefaultBotSession.class);
+            try {
+                botsApi.registerBot(bot);
+                System.out.println("Bot registered!");
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        };
     }
 
     @SuppressWarnings({"checkstyle:MethodLength"})
