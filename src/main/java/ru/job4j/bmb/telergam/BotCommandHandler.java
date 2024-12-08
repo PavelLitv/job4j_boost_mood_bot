@@ -27,18 +27,26 @@ public class BotCommandHandler {
     }
 
     public Optional<Content> commands(Message message) {
-        Optional<Content> content;
         String command = message.getText();
         Long chatId = message.getChatId();
         Long clientId = message.getFrom().getId();
         switch (command) {
-            case "/start" -> content = handleStartCommand(chatId, clientId);
-            case "/week_mood_log" -> content = handleWeekModLog(chatId, clientId);
-            case "/month_mood_log" -> content = handleMothModLog(chatId, clientId);
-            case "/award" -> content = handleAward(chatId, clientId);
-            default -> content = Optional.empty();
+            case "/start" -> {
+                return handleStartCommand(chatId, clientId);
+            }
+            case "/week_mood_log" -> {
+                return handleWeekModLog(chatId, clientId);
+            }
+            case "/month_mood_log" -> {
+                return handleMothModLog(chatId, clientId);
+            }
+            case "/award" -> {
+                return handleAward(chatId, clientId);
+            }
+            default -> {
+                return Optional.empty();
+            }
         }
-        return content;
     }
 
     public Optional<Content> callBackQuery(CallbackQuery callback) {
