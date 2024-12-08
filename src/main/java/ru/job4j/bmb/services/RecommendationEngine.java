@@ -3,23 +3,20 @@ package ru.job4j.bmb.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.job4j.bmb.content.Content;
-import ru.job4j.bmb.content.ContentProvider;
-
-import java.util.List;
-import java.util.Random;
+import ru.job4j.bmb.repository.MoodContentRepository;
 
 @Service
 public class RecommendationEngine {
-    private final List<ContentProvider> contents;
-    private static final Random RND = new Random(System.currentTimeMillis());
+    private final MoodContentRepository moodContentRepository;
 
     @Autowired
-    public RecommendationEngine(List<ContentProvider> contents) {
-        this.contents = contents;
+    public RecommendationEngine(MoodContentRepository moodContentRepository) {
+        this.moodContentRepository = moodContentRepository;
     }
 
     public Content recommendFor(Long chatId, Long moodId) {
-        var index = RND.nextInt(0, contents.size());
-        return contents.get(index).byMood(chatId, moodId);
+        Content content = new Content(chatId);
+        moodContentRepository.findByMoodId(moodId).ifPresent(moodContent -> content.setText(moodContent.getText()));
+        return content;
     }
 }

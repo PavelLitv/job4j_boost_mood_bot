@@ -7,9 +7,7 @@ import ru.job4j.bmb.repository.AchievementRepository;
 import ru.job4j.bmb.repository.MoodLogRepository;
 import ru.job4j.bmb.repository.UserRepository;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +38,7 @@ public class MoodService {
         MoodLog moodLog = new MoodLog();
         moodLog.setMood(mood);
         moodLog.setUser(user);
-        moodLog.setCreatedAt(System.currentTimeMillis());
+        moodLog.setCreatedAt(LocalDate.now().toEpochSecond(LocalTime.now(), ZoneOffset.UTC));
         moodLogRepository.save(moodLog);
         return recommendationEngine.recommendFor(user.getChatId(), moodId);
     }
@@ -48,7 +46,8 @@ public class MoodService {
     public Optional<Content> weekMoodLogCommand(long chatId, Long clientId) {
         List<MoodLog> moodLogs = moodLogRepository.findAll().stream()
                 .filter(moodLog -> moodLog.getUser().getClientId() == clientId
-                        && moodLog.getCreatedAt() > LocalDate.now().minusWeeks(1).toEpochDay())
+                        && moodLog.getCreatedAt() > LocalDate.now().minusWeeks(1)
+                        .toEpochSecond(LocalTime.now(), ZoneOffset.UTC))
                 .toList();
         var content = new Content(chatId);
         content.setText(formatMoodLogs(moodLogs, "This week you have chosen the mood"));
@@ -58,7 +57,8 @@ public class MoodService {
     public Optional<Content> monthMoodLogCommand(long chatId, Long clientId) {
         List<MoodLog> moodLogs = moodLogRepository.findAll().stream()
                 .filter(moodLog -> moodLog.getUser().getClientId() == clientId
-                        && moodLog.getCreatedAt() > LocalDate.now().minusMonths(1).toEpochDay())
+                        && moodLog.getCreatedAt() > LocalDate.now().minusMonths(1)
+                        .toEpochSecond(LocalTime.now(), ZoneOffset.UTC))
                 .toList();
         var content = new Content(chatId);
         content.setText(formatMoodLogs(moodLogs, "This month you have chosen the mood"));
