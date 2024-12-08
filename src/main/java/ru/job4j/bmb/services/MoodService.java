@@ -44,22 +44,16 @@ public class MoodService {
     }
 
     public Optional<Content> weekMoodLogCommand(long chatId, Long clientId) {
-        List<MoodLog> moodLogs = moodLogRepository.findAll().stream()
-                .filter(moodLog -> moodLog.getUser().getClientId() == clientId
-                        && moodLog.getCreatedAt() > LocalDate.now().minusWeeks(1)
-                        .toEpochSecond(LocalTime.now(), ZoneOffset.UTC))
-                .toList();
+        long weekStart = LocalDateTime.now().minusWeeks(1).toEpochSecond(ZoneOffset.UTC);
+        List<MoodLog> moodLogs = moodLogRepository.findMoodLogsForWeek(clientId, weekStart);
         var content = new Content(chatId);
         content.setText(formatMoodLogs(moodLogs, "This week you have chosen the mood"));
         return Optional.of(content);
     }
 
     public Optional<Content> monthMoodLogCommand(long chatId, Long clientId) {
-        List<MoodLog> moodLogs = moodLogRepository.findAll().stream()
-                .filter(moodLog -> moodLog.getUser().getClientId() == clientId
-                        && moodLog.getCreatedAt() > LocalDate.now().minusMonths(1)
-                        .toEpochSecond(LocalTime.now(), ZoneOffset.UTC))
-                .toList();
+        long monthStart = LocalDateTime.now().minusMonths(1).toEpochSecond(ZoneOffset.UTC);
+        List<MoodLog> moodLogs = moodLogRepository.findMoodLogsForMonth(clientId, monthStart);
         var content = new Content(chatId);
         content.setText(formatMoodLogs(moodLogs, "This month you have chosen the mood"));
         return Optional.of(content);
