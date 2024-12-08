@@ -49,7 +49,7 @@ public class BotCommandHandler {
         }
     }
 
-    public Optional<Content> callBackQuery(CallbackQuery callback) {
+    public Optional<Content> handleCallback(CallbackQuery callback) {
         var moodId = Long.valueOf(callback.getData());
         var user = userRepository.findByClientId(callback.getFrom().getId());
         return user.map(value -> moodService.chooseMood(value, moodId));
