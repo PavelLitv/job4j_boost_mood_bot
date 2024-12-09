@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface AwardRepository extends CrudRepository<Award, Long> {
     List<Award> findAll();
+
+    List<Award> findAllByDaysLessThanEqual(int daysBefore);
 }
