@@ -16,7 +16,8 @@ public class RecommendationEngine {
 
     public Content recommendFor(Long chatId, Long moodId) {
         Content content = new Content(chatId);
-        moodContentRepository.findByMoodId(moodId).ifPresent(moodContent -> content.setText(moodContent.getText()));
+        moodContentRepository.findByMoodId(moodId)
+                .ifPresent(moodContent -> content.setText(moodContent.getText()));
         return content;
     }
 }

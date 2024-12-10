@@ -11,6 +11,7 @@ public class MoodFakeRepository
         extends CrudRepositoryFake<Mood, Long>
         implements MoodRepository {
 
+    @Override
     public List<Mood> findAll() {
         return new ArrayList<>(memory.values());
     }
