@@ -5,22 +5,26 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 public class LoggingAspect {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingAspect.class);
+
     @Pointcut("execution(* ru.job4j.bmb.services.*.*(..))")
     private void serviceLayer() {
     }
 
     @Before("serviceLayer()")
     public void logBefore(JoinPoint joinPoint) {
-        System.out.println(joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+        LOGGER.info("{}.{}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
         var values = joinPoint.getArgs();
         var params = ((MethodSignature) joinPoint.getSignature()).getParameterNames();
         for (int i = 0; i < values.length; i++) {
-            System.out.println(params[i] + ": " + values[i]);
+            LOGGER.info("{}: {}", params[i], values[i]);
         }
     }
 }
