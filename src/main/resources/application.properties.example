@@ -1,3 +1,4 @@
+telegram.mode=real
 spring.profiles.active=test
 telegram.bot.name=botName
 telegram.bot.token=botToken
