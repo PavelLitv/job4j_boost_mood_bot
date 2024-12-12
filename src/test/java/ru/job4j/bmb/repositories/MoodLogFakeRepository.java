@@ -8,8 +8,8 @@ import ru.job4j.bmb.repository.MoodLogRepository;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class MoodLogFakeRepository
         extends CrudRepositoryFake<MoodLog, Long>
@@ -27,10 +27,10 @@ public class MoodLogFakeRepository
     }
 
     @Override
-    public Stream<MoodLog> findByUserIdOrderByCreatedAtDesc(Long userId) {
+    public Optional<MoodLog> findTopByUserIdOrderByCreatedAtDesc(Long userId) {
         return memory.values().stream()
                 .filter(moodLog -> moodLog.getUser().getId().equals(userId))
-                .sorted(Comparator.comparing(MoodLog::getCreatedAt).reversed());
+                .max(Comparator.comparing(MoodLog::getCreatedAt));
     }
 
     @Override

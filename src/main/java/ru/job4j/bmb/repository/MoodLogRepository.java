@@ -6,8 +6,8 @@ import ru.job4j.bmb.model.MoodLog;
 import ru.job4j.bmb.model.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Repository
 public interface MoodLogRepository extends CrudRepository<MoodLog, Long> {
@@ -15,7 +15,7 @@ public interface MoodLogRepository extends CrudRepository<MoodLog, Long> {
 
     List<MoodLog> findByUserId(Long userId);
 
-    Stream<MoodLog> findByUserIdOrderByCreatedAtDesc(Long userId);
+    Optional<MoodLog> findTopByUserIdOrderByCreatedAtDesc(Long userId);
 
     default List<MoodLog> findMoodLogsForWeek(Long userId, long weekStart) {
         return findAll().stream()

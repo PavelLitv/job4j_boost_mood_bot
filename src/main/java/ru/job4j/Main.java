@@ -11,9 +11,11 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.job4j.bmb.model.Award;
+import ru.job4j.bmb.model.DailyAdvice;
 import ru.job4j.bmb.model.Mood;
 import ru.job4j.bmb.model.MoodContent;
 import ru.job4j.bmb.repository.AwardRepository;
+import ru.job4j.bmb.repository.DailyAdviceRepository;
 import ru.job4j.bmb.repository.MoodContentRepository;
 import ru.job4j.bmb.repository.MoodRepository;
 
@@ -44,7 +46,8 @@ public class Main {
     @Bean
     CommandLineRunner loadDatabase(MoodRepository moodRepository,
                                    MoodContentRepository moodContentRepository,
-                                   AwardRepository awardRepository) {
+                                   AwardRepository awardRepository,
+                                   DailyAdviceRepository dailyAdviceRepository) {
         return args -> {
             var moods = moodRepository.findAll();
             if (!moods.isEmpty()) {
@@ -133,6 +136,20 @@ public class Main {
                             + "вдохновляющая цитата.", 50)
             );
             awardRepository.saveAll(awards);
+
+            List<DailyAdvice> dailyAdvices = List.of(
+                    new DailyAdvice("Каждый день — это новая возможность.", true),
+                    new DailyAdvice("Не бойся трудностей, ведь каждая из них — это шаг к твоему успеху.", true),
+                    new DailyAdvice("Верь в свои способности и стремись к самосовершенствованию.", true),
+                    new DailyAdvice("Саморазвитие — это путь, который никогда не заканчивается.", true),
+                    new DailyAdvice("Не жди идеальных условий, начни действовать прямо сейчас.", true),
+                    new DailyAdvice("Обнимите близкого человека.", false),
+                    new DailyAdvice("Включите бодрую музыку и начните танцевать.", false),
+                    new DailyAdvice("Поговорите с близким человеком.", false),
+                    new DailyAdvice("Обратиться к приятным для себя занятиям.", false),
+                    new DailyAdvice("Мыслите позитивно.", false)
+            );
+            dailyAdviceRepository.saveAll(dailyAdvices);
         };
     }
 }

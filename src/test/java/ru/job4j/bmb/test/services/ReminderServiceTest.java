@@ -1,6 +1,9 @@
 package ru.job4j.bmb.test.services;
 
 import org.junit.jupiter.api.Test;
+import ru.job4j.bmb.repositories.DailyAdviceFakeRepository;
+import ru.job4j.bmb.repositories.UserFakeRepository;
+import ru.job4j.bmb.services.DailyAdviceService;
 import ru.job4j.bmb.services.ReminderService;
 import ru.job4j.bmb.telergam.SentContent;
 import ru.job4j.bmb.telergam.TgUI;
@@ -41,7 +44,8 @@ class ReminderServiceTest {
         moodLog.setCreatedAt(yesterday);
         moodLogRepository.save(moodLog);
         var tgUI = new TgUI(moodRepository);
-        new ReminderService(sentContent, moodLogRepository, tgUI)
+        new ReminderService(sentContent, moodLogRepository, new UserFakeRepository(),
+                new DailyAdviceService(moodLogRepository, new DailyAdviceFakeRepository()), tgUI)
                 .remindUsers();
         assertThat(result.iterator().next().getMarkup().getKeyboard()
                 .iterator().next().iterator().next().getText()).isEqualTo("Good");
@@ -49,6 +53,7 @@ class ReminderServiceTest {
 
     @Test
     public void whenNotRemind() {
+        var userRepository = new UserFakeRepository();
         var result = new ArrayList<Content>();
         var sentContent = new SentContent() {
             @Override
@@ -69,7 +74,8 @@ class ReminderServiceTest {
         moodLog.setCreatedAt(yesterday);
         moodLogRepository.save(moodLog);
         var tgUI = new TgUI(moodRepository);
-        new ReminderService(sentContent, moodLogRepository, tgUI)
+        new ReminderService(sentContent, moodLogRepository, new UserFakeRepository(),
+                new DailyAdviceService(moodLogRepository, new DailyAdviceFakeRepository()), tgUI)
                 .remindUsers();
         assertThat(result.size()).isEqualTo(0);
     }

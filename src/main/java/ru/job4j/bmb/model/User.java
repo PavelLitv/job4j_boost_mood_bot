@@ -17,6 +17,9 @@ public class User {
     @Column(name = "chat_id")
     private long chatId;
 
+    @Column(name = "daily_advice")
+    private boolean dailyAdvice;
+
     public Long getId() {
         return id;
     }
@@ -39,6 +42,14 @@ public class User {
 
     public void setChatId(long chatId) {
         this.chatId = chatId;
+    }
+
+    public boolean isDailyAdvice() {
+        return dailyAdvice;
+    }
+
+    public void setDailyAdvice(boolean dailyAdvice) {
+        this.dailyAdvice = dailyAdvice;
     }
 
     @Override
