@@ -23,6 +23,12 @@ public class Mood {
         this.good = good;
     }
 
+    public Mood(Long id, String text, boolean good) {
+        this.id = id;
+        this.text = text;
+        this.good = good;
+    }
+
     public Long getId() {
         return id;
     }

@@ -18,7 +18,8 @@ public class DailyAdvice {
     public DailyAdvice() {
     }
 
-    public DailyAdvice(String text, boolean good) {
+    public DailyAdvice(Long id, String text, boolean good) {
+        this.id = id;
         this.text = text;
         this.good = good;
     }

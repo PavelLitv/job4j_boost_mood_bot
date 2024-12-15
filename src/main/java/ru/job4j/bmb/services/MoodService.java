@@ -6,7 +6,6 @@ import ru.job4j.bmb.content.Content;
 import ru.job4j.bmb.model.*;
 import ru.job4j.bmb.repository.AchievementRepository;
 import ru.job4j.bmb.repository.MoodLogRepository;
-import ru.job4j.bmb.repository.UserRepository;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -18,7 +17,6 @@ public class MoodService {
     private final ApplicationEventPublisher publisher;
     private final MoodLogRepository moodLogRepository;
     private final RecommendationEngine recommendationEngine;
-    private final UserRepository userRepository;
     private final AchievementRepository achievementRepository;
     private final DateTimeFormatter formatter = DateTimeFormatter
             .ofPattern("dd-MM-yyyy HH:mm")
@@ -27,12 +25,10 @@ public class MoodService {
     public MoodService(ApplicationEventPublisher publisher,
                        MoodLogRepository moodLogRepository,
                        RecommendationEngine recommendationEngine,
-                       UserRepository userRepository,
                        AchievementRepository achievementRepository) {
         this.publisher = publisher;
         this.moodLogRepository = moodLogRepository;
         this.recommendationEngine = recommendationEngine;
-        this.userRepository = userRepository;
         this.achievementRepository = achievementRepository;
     }
 

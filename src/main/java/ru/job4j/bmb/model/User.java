@@ -20,6 +20,15 @@ public class User {
     @Column(name = "daily_advice")
     private boolean dailyAdvice;
 
+    public User() { }
+
+    public User(Long id, long clientId, long chatId, boolean dailyAdvice) {
+        this.id = id;
+        this.clientId = clientId;
+        this.chatId = chatId;
+        this.dailyAdvice = dailyAdvice;
+    }
+
     public Long getId() {
         return id;
     }

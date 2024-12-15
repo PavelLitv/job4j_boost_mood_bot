@@ -19,6 +19,14 @@ public class MoodLog {
     @JoinColumn(name = "mood_id")
     private Mood mood;
 
+    public MoodLog() { }
+
+    public MoodLog(Long id, User user, Mood mood) {
+        this.id = id;
+        this.user = user;
+        this.mood = mood;
+    }
+
     private long createdAt;
 
     public Long getId() {

@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface DailyAdviceRepository extends CrudRepository<DailyAdvice, Long> {
+    List<DailyAdvice> findAll();
+
     List<DailyAdvice> findByGood(boolean good);
 }

@@ -20,7 +20,8 @@ public class Award {
     public Award() {
     }
 
-    public Award(String title, String description, int days) {
+    public Award(Long id, String title, String description, int days) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.days = days;

@@ -13,7 +13,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Optional<User> findByClientId(Long clientId);
 
-    User save(User user);
-
     List<User> findByDailyAdvice(boolean dailyAdvice);
 }

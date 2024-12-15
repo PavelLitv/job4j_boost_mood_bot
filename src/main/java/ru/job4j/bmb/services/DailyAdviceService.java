@@ -23,11 +23,9 @@ public class DailyAdviceService {
 
     public Optional<Content> getRandomAdvice(User user) {
         var content = new Content(user.getChatId());
-        var moodLog = moodLogRepository
-                .findTopByUserIdOrderByCreatedAtDesc(user.getId())
-                .orElse(null);
-        if (moodLog != null) {
-            var advices = dailyAdviceRepository.findByGood(moodLog.getMood().isGood());
+        var moodLog = moodLogRepository.findTopByUserIdOrderByCreatedAtDesc(user.getId());
+        if (moodLog.isPresent()) {
+            var advices = dailyAdviceRepository.findByGood(moodLog.get().getMood().isGood());
             int index = (int) (Math.random() * advices.size());
             content.setText(advices.get(index).getText());
             return Optional.of(content);

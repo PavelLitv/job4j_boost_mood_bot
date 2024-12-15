@@ -6,6 +6,7 @@ import ru.job4j.bmb.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UserFakeRepository extends CrudRepositoryFake<User, Long> implements UserRepository {
     @Override
@@ -19,12 +20,9 @@ public class UserFakeRepository extends CrudRepositoryFake<User, Long> implement
     }
 
     @Override
-    public User save(User user) {
-        return null;
-    }
-
-    @Override
     public List<User> findByDailyAdvice(boolean dailyAdvice) {
-        return List.of();
+        return memory.values().stream()
+                .filter(user -> user.isDailyAdvice() == dailyAdvice)
+                .collect(Collectors.toList());
     }
 }
