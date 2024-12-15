@@ -17,7 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AchievementServiceTest {
     @Test
     public void whenTwoPotentialAchievementsThenTakeOne() {
-        // Arrange
         var sentContent = new SentContentFake();
         var user = new User(1L, 1000, 100, true);
         var mood = new Mood(1L, "Good", true);
@@ -41,15 +40,12 @@ public class AchievementServiceTest {
                 achievementRepository,
                 sentContent
         );
-        // Act
         achievementService.onApplicationEvent(new UserEvent(this, user));
-        // Assert
         assertThat(sentContent.getResult().size()).isEqualTo(1);
     }
 
     @Test
     public void whenGetAchievement() {
-        // Arrange
         var sentContent = new SentContentFake();
         var user = new User(1L, 1000, 100, true);
         var mood = new Mood(1L, "Good", true);
@@ -68,16 +64,13 @@ public class AchievementServiceTest {
                 new AchievementRepositoryFake(),
                 sentContent
         );
-        // Act
         achievementService.onApplicationEvent(new UserEvent(this, user));
-        // Assert
         assertThat(sentContent.getResult().get(0).getText())
                 .isEqualTo("Поздравляю! Вы получили достижение:\n1 раз выбрал ок\n");
     }
 
     @Test
     public void whenGetAchievementsThenUnavailableAwardNotReceived() {
-        // Arrange
         var sentContent = new SentContentFake();
         var user = new User(1L, 1000, 100, true);
         var mood = new Mood(1L, "Good", true);
@@ -99,9 +92,7 @@ public class AchievementServiceTest {
                 new AchievementRepositoryFake(),
                 sentContent
         );
-        // Act
         achievementService.onApplicationEvent(new UserEvent(this, user));
-        // Assert
         assertThat(sentContent.getResult().size()).isEqualTo(1);
     }
 }

@@ -22,7 +22,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ReminderServiceTest {
     @Test
     public void whenMoodGood() {
-        // Arrange
         var sentContent = new SentContentFake();
         var moodRepository = new MoodFakeRepository();
         moodRepository.save(new Mood("Good", true));
@@ -38,18 +37,15 @@ class ReminderServiceTest {
         moodLog.setCreatedAt(yesterday);
         moodLogRepository.save(moodLog);
         var tgUI = new TgUI(moodRepository);
-        // Act
         new ReminderService(sentContent, moodLogRepository, new UserFakeRepository(),
                 new DailyAdviceService(moodLogRepository, new DailyAdviceFakeRepository()), tgUI)
                 .remindUsers();
-        // Assert
         assertThat(sentContent.getResult().iterator().next().getMarkup().getKeyboard()
                 .iterator().next().iterator().next().getText()).isEqualTo("Good");
     }
 
     @Test
     public void whenNotRemind() {
-        // Arrange
         var sentContent = new SentContentFake();
         var moodRepository = new MoodFakeRepository();
         moodRepository.save(new Mood("Good", true));
@@ -64,17 +60,14 @@ class ReminderServiceTest {
         moodLog.setCreatedAt(yesterday);
         moodLogRepository.save(moodLog);
         var tgUI = new TgUI(moodRepository);
-        // Act
         new ReminderService(sentContent, moodLogRepository, new UserFakeRepository(),
                 new DailyAdviceService(moodLogRepository, new DailyAdviceFakeRepository()), tgUI)
                 .remindUsers();
-        // Assert
         assertThat(sentContent.getResult().size()).isEqualTo(0);
     }
 
     @Test
     public void whenEveryDayThenForUserEveryDayTrue() {
-        // Arrange
         var sentContent = new SentContentFake();
         var userRepository = new UserFakeRepository();
         var user = new User(1L, 1000, 100, true);
@@ -96,10 +89,8 @@ class ReminderServiceTest {
         dailyAdviceFakeRepository.save(new DailyAdvice(2L, "Мыслите позитивно.", false));
         var dailyAdviceService = new DailyAdviceService(moodLogRepository, dailyAdviceFakeRepository);
         var tgUI = new TgUI(moodRepository);
-        // Act
         new ReminderService(sentContent, moodLogRepository, userRepository, dailyAdviceService, tgUI)
                 .everyDay();
-        // Assert
         assertThat(sentContent.getResult().size()).isEqualTo(1);
         assertThat(sentContent.getResult().iterator().next().getText())
                 .isEqualTo("Каждый день — это новая возможность.");
